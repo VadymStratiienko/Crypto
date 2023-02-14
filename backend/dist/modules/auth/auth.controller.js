@@ -36,7 +36,7 @@ let AuthController = class AuthController {
 };
 __decorate([
     (0, swagger_1.ApiTags)('API'),
-    (0, swagger_1.ApiResponse)({ status: 201, type: dto_1.CreateUserDTO }),
+    (0, swagger_1.ApiResponse)({ status: 201, type: response_1.AuthUserResponse }),
     (0, common_1.Post)('register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

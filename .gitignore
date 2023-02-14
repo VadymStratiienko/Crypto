@@ -1,6 +1,7 @@
 .*
 !.gitignore
-
+backend/dist
+backend/dist/tsconfig.build.tsbuildinfo
 frontend/node_modules
 backend/node_modules
 

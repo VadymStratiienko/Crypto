@@ -18,9 +18,11 @@ const sequelize_1 = require("@nestjs/sequelize");
 const user_model_1 = require("./models/user.model");
 const bcrypt = require("bcrypt");
 const watchlist_model_1 = require("../watchlist/models/watchlist.model");
+const token_service_1 = require("../token/token.service");
 let UsersService = class UsersService {
-    constructor(userRepository) {
+    constructor(userRepository, tokenService) {
         this.userRepository = userRepository;
+        this.tokenService = tokenService;
     }
     async hashPassword(password) {
         try {
@@ -61,7 +63,7 @@ let UsersService = class UsersService {
     }
     async publicUser(email) {
         try {
-            return this.userRepository.findOne({
+            const user = await this.userRepository.findOne({
                 where: { email },
                 attributes: { exclude: ['password'] },
                 include: {
@@ -69,6 +71,8 @@ let UsersService = class UsersService {
                     required: false,
                 },
             });
+            const token = await this.tokenService.generateJwtToken(user);
+            return { user, token };
         }
         catch (e) {
             throw new Error(e);
@@ -96,7 +100,7 @@ let UsersService = class UsersService {
 UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(user_model_1.User)),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, token_service_1.TokenService])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

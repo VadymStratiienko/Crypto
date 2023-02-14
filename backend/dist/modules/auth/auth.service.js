@@ -14,18 +14,17 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const errors_1 = require("../../common/constants/errors");
 const bcrypt = require("bcrypt");
-const token_service_1 = require("../token/token.service");
 let AuthService = class AuthService {
-    constructor(userService, tokenService) {
+    constructor(userService) {
         this.userService = userService;
-        this.tokenService = tokenService;
     }
     async registerUsers(dto) {
         try {
             const existUser = await this.userService.findUserByEmail(dto.email);
             if (existUser)
                 throw new common_1.BadRequestException(errors_1.AppError.USER_EXIST);
-            return this.userService.createUser(dto);
+            await this.userService.createUser(dto);
+            return this.userService.publicUser(dto.email);
         }
         catch (e) {
             throw new Error(e);
@@ -39,9 +38,7 @@ let AuthService = class AuthService {
             const validatePassword = await bcrypt.compare(dto.password, existUser.password);
             if (!validatePassword)
                 throw new common_1.BadRequestException(errors_1.AppError.WRONG_DATA);
-            const user = await this.userService.publicUser(dto.email);
-            const token = await this.tokenService.generateJwtToken(user);
-            return { user, token };
+            return this.userService.publicUser(dto.email);
         }
         catch (e) {
             throw new Error(e);
@@ -50,8 +47,7 @@ let AuthService = class AuthService {
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UsersService,
-        token_service_1.TokenService])
+    __metadata("design:paramtypes", [users_service_1.UsersService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

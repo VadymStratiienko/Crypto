@@ -6,7 +6,11 @@ const config_1 = require("@nestjs/config");
 const swagger_1 = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, {
+        cors: {
+            origin: ['http://localhost:3000'],
+        },
+    });
     const configService = app.get(config_1.ConfigService);
     const port = configService.get('port');
     app.useGlobalPipes(new common_1.ValidationPipe());
