@@ -23,9 +23,9 @@ interface IPublicUser {
     firstName: string,
     username: string,
     email: string,
-    createAt: string,
-    updateAt: string,
-    watchlist: [IWatchlist]
+    createdAt: string,
+    updatedAt: string
+    watchlist:[IWatchlist]
 }
 
 interface IWatchlist {
@@ -33,6 +33,6 @@ interface IWatchlist {
     name: string,
     assetId: string,
     createdAt: string,
-    updateAt: string,
-    user:number | null
+    updatedAt: string,
+    user: number | null
 }

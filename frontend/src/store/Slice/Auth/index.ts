@@ -7,15 +7,15 @@ const initialState: IAuthState = {
         firstName: '',
         username: '',
         email: '',
-        createAt: '',
-        updateAt: '',
-        watchlist: [
+        createdAt: '',
+        updatedAt: '',
+        watchlist:[
             {
                 id: null,
                 name: '',
                 assetId: '',
                 createdAt: '',
-                updateAt: '',
+                updatedAt: '',
                 user: null
             }
         ]
