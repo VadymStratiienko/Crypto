@@ -12,40 +12,56 @@ import {
     ListItemText,
     Typography,
     useTheme
-} from '@mui/material'
+} from '@mui/material';
 import {
     ChevronLeftOutlined,
     ChevronRightOutlined,
-    AutoGraphOutlined,
-    MenuBookOutlined,
-    SettingsOutlined,
     LogoutOutlined
 } from '@mui/icons-material';
 import {useLocation, useNavigate} from "react-router-dom";
+import Logo from '../../assets/images/sidebar/logo.svg'
+import {navMenu} from "../../Common/moks/navigate";
 import FlexBetween from "../FlexBetween";
+
 
 const SidebarComponent = (props: any) => {
     const [active, setActive] = useState('')
-    const {isNonMobile, drawerWidth, isOpen, setIsOpen} = props;
+    const {isNonMobile, drawerWidth, isOpen, setIsOpen} = props
     const classes = useStyles()
-    const {pathname} = useLocation();
+    const {pathname} = useLocation()
     const navigate = useNavigate()
-    const theme = useTheme();
+    const theme = useTheme()
 
     useEffect(() => {
         setActive(pathname.substring(1))
     }, [pathname])
+
+    const renderNavMenu = navMenu.map((element): JSX.Element => {
+        return (
+            <ListItem key={element.id}>
+                <ListItemButton onClick={() => navigate(`${element.path}`)} className={classes.navItem}>
+                    <ListItemIcon>
+                        {element.icon}
+                    </ListItemIcon>
+                    <ListItemText>
+                        <Typography variant='body1'>{element.name}</Typography>
+                    </ListItemText>
+                </ListItemButton>
+            </ListItem>
+        )
+    })
+
     return (
         <Box component='nav'>
             {isOpen && (
                 <Drawer
                     open={isOpen}
                     onClose={() => setIsOpen(false)}
-                    variant='permanent'
+                    variant='persistent'
                     anchor='left'
                     sx={{
                         width: drawerWidth,
-                        '& .MouDrawer-paper': {
+                        '& .MuiDrawer-paper': {
                             color: theme.palette.secondary.main,
                             backgroundColor: theme.palette.primary.main,
                             boxSizing: 'border-box',
@@ -53,19 +69,42 @@ const SidebarComponent = (props: any) => {
                         }
                     }}
                 >
-                    <Box width='100%'>
+                    <Box className={classes.navBlock}>
                         <Box>
                             <FlexBetween>
-                                <Box display='flex' alignItems='center' gap='10px'>
-                                    <Typography>Crypto</Typography>
+                                <Box className={classes.brand}>
+                                    <img src={Logo} alt="Logo image"/>
+                                    <Typography
+                                        variant='h1'
+                                        className={classes.brandTitle}
+                                    >
+                                        Crypto
+                                    </Typography>
                                 </Box>
                                 {!isNonMobile && (
                                     <IconButton onClick={() => setIsOpen(!isOpen)}>
-                                        <ChevronLeftOutlined/>
+                                        <ChevronLeftOutlined />
                                     </IconButton>
                                 )}
                             </FlexBetween>
                         </Box>
+                        <List className={classes.navList}>
+                            {renderNavMenu}
+                        </List>
+                    </Box>
+                    <Box width='100%'>
+                        <List>
+                            <ListItem>
+                                <ListItemButton className={classes.navItem}>
+                                    <ListItemIcon>
+                                        <LogoutOutlined />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        <Typography>Logout</Typography>
+                                    </ListItemText>
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
                     </Box>
                 </Drawer>
             )}

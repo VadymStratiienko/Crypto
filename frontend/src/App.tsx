@@ -6,23 +6,30 @@ import AuthRootComponent from "./Components/Auth";
 import {ColorModeContext, useMode} from "./theme";
 import {ThemeProvider, CssBaseline} from "@mui/material";
 import LayoutComponent from "./Components/Layout";
+import WatchlistComponent from "./Components/Watchlist";
+import NewsComponent from "./Components/News";
+import SettingsComponent from "./Components/Settings";
+
 
 function App() {
     const [theme, colorMode] = useMode()
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-                <CssBaseline />
+                <CssBaseline/>
                 <LayoutComponent>
-                <div className="App">
-                    <Routes>
-                        <Route element={<PrivateRouter/>}>
-                        </Route>
-                        <Route path='/' element={<Home/>}/>
-                        <Route path='login' element={<AuthRootComponent/>}/>
-                        <Route path='register' element={<AuthRootComponent/>}/>
-                    </Routes>
-                </div>
+                    <div className="App">
+                        <Routes>
+                            <Route element={<PrivateRouter/>}>
+                                <Route path='/' element={<Home/>}/>
+                                <Route path='/watchlist' element={<WatchlistComponent/>}/>
+                                <Route path='news' element={<NewsComponent/>}/>
+                                <Route path='/settings' element={<SettingsComponent/>}/>
+                            </Route>
+                            <Route path='login' element={<AuthRootComponent/>}/>
+                            <Route path='register' element={<AuthRootComponent/>}/>
+                        </Routes>
+                    </div>
                 </LayoutComponent>
             </ThemeProvider>
         </ColorModeContext.Provider>
