@@ -1,14 +1,14 @@
 import React from 'react';
-import Home from './Components/Home'
+import Home from './Pages/Home'
 import {Route, Routes} from "react-router-dom";
 import PrivateRouter from "./utils/router/privateRouter";
-import AuthRootComponent from "./Components/Auth";
+import AuthRootComponent from "./Pages/Auth";
 import {ColorModeContext, useMode} from "./theme";
 import {ThemeProvider, CssBaseline} from "@mui/material";
 import LayoutComponent from "./Components/Layout";
-import WatchlistComponent from "./Components/Watchlist";
-import NewsComponent from "./Components/News";
-import SettingsComponent from "./Components/Settings";
+import WatchlistComponent from "./Pages/Watchlist";
+import NewsComponent from "./Pages/News";
+import SettingsComponent from "./Pages/Settings";
 
 
 function App() {
