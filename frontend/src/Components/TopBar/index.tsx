@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {AppBar, Box, Grid, IconButton, InputBase, Toolbar, Typography, useTheme} from "@mui/material";
-import {useAppSelector} from "../../hook";
+import {useAppSelector} from "../../utils/hook";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {ColorModeContext} from "../../theme";
 import {useStyles} from "./styles";
