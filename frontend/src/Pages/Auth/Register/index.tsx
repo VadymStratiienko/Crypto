@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import {Box, TextField, Typography} from "@mui/material";
-import {IPropsRegister} from "../../../Common/types/auth";
+import {IPropsRegister} from "../../../common/types/auth";
 import {useStyles} from "./styles";
-import AppButton from "../../../Components/app-button/indax";
+import AppLoadingButton from "../../../Components/loading-button";
 
 const RegisterPage: FC<IPropsRegister> = (props: IPropsRegister): JSX.Element => {
-    const {navigate, register, errors} = props
+    const {navigate, register, errors, loading} = props
     const classes = useStyles()
     return (
         <>
@@ -67,9 +67,9 @@ const RegisterPage: FC<IPropsRegister> = (props: IPropsRegister): JSX.Element =>
                 />
             </Box>
 
-            <AppButton type='submit' variant="contained">Sign In</AppButton>
+            <AppLoadingButton loading={loading} type='submit' variant="contained">Sign In</AppLoadingButton>
             <Box margin='20px 0'>
-                <Typography variant="body1" sx={{fontFamily: 'Poppins',}}>Do your have account?<span
+                <Typography variant="body1">Do your have account?<span
                     className={classes.incitingText} onClick={() => navigate('/login')}>Log In</span></Typography>
             </Box>
 
