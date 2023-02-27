@@ -18,9 +18,9 @@ import {
 } from '@mui/icons-material';
 import {useLocation, useNavigate} from "react-router-dom";
 import Logo from '../../assets/images/sidebar/logo.svg'
-import {navMenu} from "../../Common/moks/navigate";
+import {navMenu} from "../../common/moks/navigate";
 import FlexBetween from "../flex-between";
-import {ISidebarProps} from "../../Common/types/sidebar";
+import {ISidebarProps} from "../../common/types/sidebar";
 
 
 const SidebarComponent: FC<ISidebarProps> = (props: ISidebarProps): JSX.Element => {
@@ -79,7 +79,7 @@ const SidebarComponent: FC<ISidebarProps> = (props: ISidebarProps): JSX.Element 
                                         variant='h1'
                                         className={classes.brandTitle}
                                     >
-                                        Demo
+                                      Crypto
                                     </Typography>
                                 </Box>
                                 {!isNonMobile && (

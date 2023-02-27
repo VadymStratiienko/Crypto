@@ -1,18 +1,16 @@
 import React, {FC, useContext} from 'react';
 import {AppBar, Box, Grid, IconButton, InputBase, Toolbar, Typography, useTheme} from "@mui/material";
-import {useAppSelector} from "../../utils/hook";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {ColorModeContext} from "../../theme";
 import {useStyles} from "./styles";
 import {DarkMode, LightMode, MenuOutlined, Search} from "@mui/icons-material";
 import FlexBetween from "../flex-between";
-import {ITopBarProps} from "../../Common/types/top-bar";
+import {ITopBarProps} from "../../common/types/top-bar";
 
 const TopBarComponent: FC<ITopBarProps> = (props: ITopBarProps): JSX.Element => {
     const theme = useTheme()
     const colorMode: any = useContext(ColorModeContext)
     const classes = useStyles()
-    const {user} = useAppSelector((state) => state.auth)
     const {setIsOpen,isOpen} = props
 
     return (
@@ -20,7 +18,7 @@ const TopBarComponent: FC<ITopBarProps> = (props: ITopBarProps): JSX.Element => 
             <Toolbar className={classes.toolbar}>
                 <FlexBetween>
                     <MenuOutlined className={classes.menuIcon} onClick={() => setIsOpen(!isOpen)}/>
-                    <Typography variant='h3'>Welcome {user?.firstName}</Typography>
+                    <Typography variant='h3'>Welcome {sessionStorage.getItem('name')}</Typography>
                 </FlexBetween>
                 <Box display='flex'>
                     <Grid onClick={colorMode.toggleColorMode} className={classes.iconBlock}>
