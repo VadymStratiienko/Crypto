@@ -1,10 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {FC, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from "../../utils/hook";
 import {getFavoriteAssets} from "../../store/thunks/assets";
 import {Box, Grid} from "@mui/material";
 import {useStyles} from "./styles";
+import AreaChart from "../../Components/charts/area-chart";
 
-const Home = () => {
+const Home: FC = (): JSX.Element => {
     const favoriteAssets: any[] = useAppSelector(state => state.assets.favoriteAssets)
     const dispatch = useAppDispatch()
     const fetchDataRef = useRef(false)
@@ -30,7 +31,7 @@ const Home = () => {
         const currentPrice = element.data.prices[0]
         const currentCap = element.data.market_caps[0]
         return (
-            <Grid item xs={12} sm={6} lg={6}>
+            <Grid item xs={12} sm={6} lg={6} key={element.name}>
                 <Grid container className={classes.topCardItem}>
                     <Grid item xs={12} sm={6} lg={6}>
                         <h3 className={classes.assetName}>{element.name}</h3>
@@ -40,6 +41,7 @@ const Home = () => {
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6} lg={6}>
+                        <AreaChart data={element.data.prices} />
                         <h5>Chart</h5>
                     </Grid>
                 </Grid>
