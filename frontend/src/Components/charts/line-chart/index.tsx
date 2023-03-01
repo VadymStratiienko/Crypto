@@ -41,7 +41,7 @@ const LineChart = (props: ILineChartProps) => {
         ),
         datasets: [
             {
-                label: 'Cost: ',
+                label: 'Const: ',
                 data: data[0].price_chart_data.map(
                     (element: any) => element[1],
                 ),
