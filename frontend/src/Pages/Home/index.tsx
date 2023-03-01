@@ -7,7 +7,7 @@ import AreaChart from "../../Components/charts/area-chart";
 import LineChart from "../../Components/charts/line-chart";
 import TrendUp from '../../assets/images/chart/trend-up.svg'
 import TrendDown from '../../assets/images/chart/trend-down.svg'
-import {IChartData} from "../../common/types/assets";
+import {IChartData, ISingleAsset} from "../../common/types/assets";
 
 
 const Home: FC = (): JSX.Element => {
@@ -18,11 +18,15 @@ const Home: FC = (): JSX.Element => {
     const fetchDataRef = useRef(false)
     const classes = useStyles()
 
-    const favoriteAssetName = useMemo(() => ['bitcoin', 'ethereum'], [])
-    const filteredArray = favoriteAssets.filter(
-        (value, index, self) =>
-            index === self.findIndex((t) => t.name === value.name),
-    )
+    const favoriteAssetName = ['bitcoin', 'ethereum']
+
+    const filteredArray = useMemo(() => {
+        return favoriteAssets.filter(
+            (value, index, self) =>
+                index === self.findIndex((t) => t.name === value.name),
+        )
+    }, [favoriteAssets])
+
     const fetchData = useCallback(
         (data: string[]) => {
             data.forEach((element: string) => {
@@ -38,13 +42,13 @@ const Home: FC = (): JSX.Element => {
         fetchData(favoriteAssetName)
     }, [favoriteAssetName, fetchData])
 
-    const renderFavoriteBlock = filteredArray.map((element: any) => {
-        const currentPrice = element.singleAsset.map(
-            (element: any) => element.current_price,
-        )
-        const changePrice = element.singleAsset.map(
-            (element: any) => element.price_change_percentage_24h,
-        )
+    const renderFavoriteBlock = filteredArray.map((element: IChartData) => {
+        let currentPrice = 0
+        let changePrice = 0
+        element.singleAsset.forEach((element: ISingleAsset) => {
+            currentPrice = element.current_price
+            changePrice = element.price_change_percentage_24h
+        })
         return (
             <Grid item xs={12} sm={6} lg={6} key={element.name}>
                 <Grid container className={classes.topCardItem}>
