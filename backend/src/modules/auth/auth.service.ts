@@ -3,8 +3,8 @@ import { UsersService } from '../users/users.service';
 import { CreateUserDTO } from '../users/dto';
 import { AppError } from '../../common/constants/errors';
 import { UserLoginDTO } from './dto';
-import * as bcrypt from 'bcrypt';
 import { AuthUserResponse } from './response';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
       await this.userService.createUser(dto);
       return this.userService.publicUser(dto.email);
     } catch (e) {
-      throw new Error(e);
+      throw new BadRequestException(AppError.USER_EXIST);
     }
   }
 
