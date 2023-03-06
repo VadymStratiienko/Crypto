@@ -1,5 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
-import {useStyles} from "./styles";
+import React, { FC, useEffect, useState } from 'react'
+import { useStyles } from './styles'
 import {
     Box,
     Drawer,
@@ -10,24 +10,24 @@ import {
     ListItemIcon,
     ListItemText,
     Typography,
-    useTheme
-} from '@mui/material';
-import {
-    ChevronLeftOutlined,
-    LogoutOutlined
-} from '@mui/icons-material';
-import {useLocation, useNavigate} from "react-router-dom";
+    useTheme,
+} from '@mui/material'
+import { ChevronLeftOutlined, LogoutOutlined } from '@mui/icons-material'
+import { useLocation, useNavigate } from 'react-router-dom'
+import FlexBetween from '../flex-between'
+import { navMenu } from '../../common/moks/navigate'
 import Logo from '../../assets/images/sidebar/logo.svg'
-import {navMenu} from "../../common/moks/navigate";
-import FlexBetween from "../flex-between";
-import {ISidebarProps} from "../../common/types/sidebar";
+import { ISidebarProps } from '../../common/types/sidebar'
+import ThemeSwitcher from '../theme-switcher'
+import SearchBarComponent from '../search-bar'
 
-
-const SidebarComponent: FC<ISidebarProps> = (props: ISidebarProps): JSX.Element => {
+const SidebarComponent: FC<ISidebarProps> = (
+    props: ISidebarProps,
+): JSX.Element => {
     const [active, setActive] = useState('')
-    const {isNonMobile, drawerWidth, isOpen, setIsOpen} = props
+    const { isNonMobile, drawerWidth, isOpen, setIsOpen } = props
     const classes = useStyles()
-    const {pathname} = useLocation()
+    const { pathname } = useLocation()
     const navigate = useNavigate()
     const theme = useTheme()
 
@@ -40,12 +40,15 @@ const SidebarComponent: FC<ISidebarProps> = (props: ISidebarProps): JSX.Element 
             <ListItem key={element.id}>
                 <ListItemButton
                     onClick={() => navigate(`${element.path}`)}
-                    className={active === element.path ? `${classes.navItem} ${classes.active}` : classes.navItem}>
-                    <ListItemIcon>
-                        {element.icon}
-                    </ListItemIcon>
+                    className={
+                        active === element.path
+                            ? `${classes.navItem} ${classes.active}`
+                            : classes.navItem
+                    }
+                >
+                    <ListItemIcon>{element.icon}</ListItemIcon>
                     <ListItemText>
-                        <Typography variant='body1'>{element.name}</Typography>
+                        <Typography variant="body1">{element.name}</Typography>
                     </ListItemText>
                 </ListItemButton>
             </ListItem>
@@ -53,48 +56,63 @@ const SidebarComponent: FC<ISidebarProps> = (props: ISidebarProps): JSX.Element 
     })
 
     return (
-        <Box component='nav'>
+        <Box component="nav">
             {isOpen && (
                 <Drawer
                     open={isOpen}
                     onClose={() => setIsOpen(false)}
-                    variant='persistent'
-                    anchor='left'
+                    variant="persistent"
+                    anchor="left"
                     sx={{
                         width: drawerWidth,
                         '& .MuiDrawer-paper': {
                             color: theme.palette.secondary.main,
                             backgroundColor: theme.palette.primary.main,
                             boxSizing: 'border-box',
-                            width: drawerWidth
-                        }
+                            width: drawerWidth,
+                        },
                     }}
                 >
                     <Box className={classes.navBlock}>
                         <Box>
                             <FlexBetween>
                                 <Box className={classes.brand}>
-                                    <img src={Logo} alt="Logo"/>
+                                    <img src={Logo} alt="Logo" />
                                     <Typography
-                                        variant='h1'
+                                        variant="h1"
                                         className={classes.brandTitle}
                                     >
-                                      Crypto
+                                        Demo
                                     </Typography>
                                 </Box>
                                 {!isNonMobile && (
-                                    <IconButton onClick={() => setIsOpen(!isOpen)}>
+                                    <IconButton
+                                        onClick={() => setIsOpen(!isOpen)}
+                                    >
                                         <ChevronLeftOutlined />
                                     </IconButton>
                                 )}
                             </FlexBetween>
                         </Box>
-                        <List className={classes.navList}>
-                            {renderNavMenu}
-                        </List>
-                    </Box>
-                    <Box width='100%'>
                         <List>
+                            {!isNonMobile && (
+                                <ListItem>
+                                    <SearchBarComponent />
+                                </ListItem>
+                            )}
+                        </List>
+                        ,
+                        <List className={classes.navList}>{renderNavMenu}</List>
+                    </Box>
+                    <Box width="100%">
+                        <List>
+                            {!isNonMobile && (
+                                <ListItem>
+                                    <Box padding="5px">
+                                        <ThemeSwitcher />
+                                    </Box>
+                                </ListItem>
+                            )}
                             <ListItem>
                                 <ListItemButton className={classes.navItem}>
                                     <ListItemIcon>
@@ -110,7 +128,7 @@ const SidebarComponent: FC<ISidebarProps> = (props: ISidebarProps): JSX.Element 
                 </Drawer>
             )}
         </Box>
-    );
-};
+    )
+}
 
-export default SidebarComponent;
+export default SidebarComponent
