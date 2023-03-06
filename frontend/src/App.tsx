@@ -6,11 +6,11 @@ import { ColorModeContext, useMode } from './theme'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import LayoutComponent from "./Components/layout";
 import PrivateRouter from "./utils/router/privateRouter";
-import HomePage from "./Pages/HomePage";
-import WatchlistPage from "./Pages/WatchlistPage";
-import NewsPage from "./Pages/NewsPage";
-import SettingsPage from "./Pages/SettingsPage";
-import AuthRootPage from "./Pages/Auth";
+import HomePage from "./Pages/home";
+import WatchlistPage from "./Pages/watchlist";
+import NewsPage from "./Pages/news";
+import SettingsPage from "./Pages/settings";
+import AuthRootPage from "./Pages/auth";
 import SingleAssetPage from "./Pages/single-asset";
 
 

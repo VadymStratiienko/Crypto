@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {Box, TextField, Typography} from "@mui/material";
 import {IPropsRegister} from "../../../common/types/auth";
-import {useStyles} from "./styles";
 import AppLoadingButton from "../../../Components/loading-button";
+import {useStyles} from "./styles";
 
 const RegisterPage: FC<IPropsRegister> = (props: IPropsRegister): JSX.Element => {
     const {navigate, register, errors, loading} = props
