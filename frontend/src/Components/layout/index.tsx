@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
-import TopBarComponent from "../TopBar";
+import TopBarComponent from "../top-bar";
 import {Outlet, useLocation} from "react-router-dom";
 import {Box, useMediaQuery} from "@mui/material";
-import SidebarComponent from "../Sidebar";
+import SidebarComponent from "../sidebar";
 import {useStyles} from "./styles";
 
 

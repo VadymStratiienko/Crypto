@@ -5,7 +5,7 @@ import PrivateRouter from "./utils/router/privateRouter";
 import AuthRootComponent from "./Pages/Auth";
 import {ColorModeContext, useMode} from "./theme";
 import {ThemeProvider, CssBaseline} from "@mui/material";
-import LayoutComponent from "./Components/Layout";
+import LayoutComponent from "./Components/layout";
 import WatchlistComponent from "./Pages/Watchlist";
 import NewsComponent from "./Pages/News";
 import SettingsComponent from "./Pages/Settings";

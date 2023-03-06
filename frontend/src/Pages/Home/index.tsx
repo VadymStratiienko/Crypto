@@ -1,24 +1,28 @@
 import React, {FC, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from "../../utils/hook";
-import {getFavoriteAssets} from "../../store/thunks/assets";
-import {Box, Grid} from "@mui/material";
+import {getFavoriteAssets, getTopPriceData } from "../../store/thunks/assets";
+import {Box, Grid, Typography} from "@mui/material";
 import {useStyles} from "./styles";
 import AreaChart from "../../Components/charts/area-chart";
 import LineChart from "../../Components/charts/line-chart";
 import TrendUp from '../../assets/images/chart/trend-up.svg'
 import TrendDown from '../../assets/images/chart/trend-down.svg'
 import {IChartData, ISingleAsset} from "../../common/types/assets";
+import TopPriceComponent from "../../Components/top-price";
 
 
 const Home: FC = (): JSX.Element => {
     const favoriteAssets: IChartData[] = useAppSelector(
         (state) => state.assets.favoriteAssets,
     )
+    const assetsArray: ISingleAsset[] = useAppSelector(
+        (state) => state.assets.assets,
+    )
     const dispatch = useAppDispatch()
     const fetchDataRef = useRef(false)
     const classes = useStyles()
 
-    const favoriteAssetName = ['bitcoin', 'ethereum']
+    const favoriteAssetName = useMemo(() => ['bitcoin', 'ethereum'], [])
 
     const filteredArray = useMemo(() => {
         return favoriteAssets.filter(
@@ -26,6 +30,10 @@ const Home: FC = (): JSX.Element => {
                 index === self.findIndex((t) => t.name === value.name),
         )
     }, [favoriteAssets])
+
+    const filteredAssetArray = assetsArray
+        .slice()
+        .sort((a, b) => b.current_price - a.current_price)
 
     const fetchData = useCallback(
         (data: string[]) => {
@@ -40,7 +48,8 @@ const Home: FC = (): JSX.Element => {
         if (fetchDataRef.current) return
         fetchDataRef.current = true
         fetchData(favoriteAssetName)
-    }, [favoriteAssetName, fetchData])
+        dispatch(getTopPriceData())
+    }, [favoriteAssetName, fetchData, dispatch])
 
     const renderFavoriteBlock = filteredArray.map((element: IChartData) => {
         let currentPrice = 0
@@ -70,7 +79,9 @@ const Home: FC = (): JSX.Element => {
                                 ) : (
                                     <img src={TrendDown} alt="TrendDown" />
                                 )}
-                                <span>{Number(changePrice).toFixed(2)}%</span>
+                                <Typography variant="body1">
+                                    {Number(changePrice).toFixed(2)}%
+                                </Typography>
                             </Box>
                         </div>
                     </Grid>
@@ -90,6 +101,15 @@ const Home: FC = (): JSX.Element => {
             <Grid container className={classes.lineChartBlock}>
                 <Grid item xs={12} sm={12} lg={12}>
                     {filteredArray.length && <LineChart data={filteredArray} />}
+                </Grid>
+            </Grid>
+            <Grid container className={classes.topPriceRoot}>
+                <Grid item xs={12} sm={12} lg={12}>
+                    {filteredAssetArray.length && (
+                        <TopPriceComponent
+                            assets={filteredAssetArray.slice(0, 6)}
+                        />
+                    )}
                 </Grid>
             </Grid>
         </Box>
